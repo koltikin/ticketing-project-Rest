@@ -327,4 +327,15 @@ public class UserServiceImpl implements UserService {
     public Boolean isUserActive(String username) {
         return repository.findByUserNameAndIsDeleted(username,false).isEnabled();
     }
+
+    @Override
+    public List<UserDTO> listAllUsers() {
+       return repository.findAll().stream()
+                .map(mapper::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO findByUserName(String username) {
+        return mapper.convertToDto(repository.findByUserNameAndIsDeleted(username,false));
+    }
 }

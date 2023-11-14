@@ -29,5 +29,7 @@ public interface UserService extends CrudService<UserDTO,String>{
     Boolean isPasswordTokenValid(String token);
 
     Boolean isUserActive(String username);
+    List<UserDTO> listAllUsers();
 
+    UserDTO findByUserName(String username);
 }
