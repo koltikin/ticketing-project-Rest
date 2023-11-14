@@ -1,20 +1,20 @@
 package com.cydeo.service;
 
 import com.cydeo.dto.ProjectDTO;
-import com.cydeo.entity.Project;
-import com.cydeo.entity.User;
+import com.cydeo.dto.UserDTO;
 
 import java.util.List;
 
-public interface ProjectService extends CrudService<ProjectDTO,String>{
-    void projectComplete(String projectCode);
-    List<ProjectDTO> findByProjectDetail();
-    List<ProjectDTO>findAllByManager();
-    List<ProjectDTO> listAllNotCompletedPrjByManager(User manager);
+public interface ProjectService {
 
-    List<Project> listAllProjectByManager(User manager);
+    ProjectDTO getByProjectCode(String code);
+    List<ProjectDTO> listAllProjects();
+    void save(ProjectDTO dto);
+    void update(ProjectDTO dto);
+    void delete(String code);
+    void complete(String code);
+    List<ProjectDTO> listAllProjectDetails();
 
-    Boolean isProjectExist(ProjectDTO projectDTO);
+    List<ProjectDTO> listAllNonCompletedByAssignedManager(UserDTO assignedManager);
 
-    Boolean isValidStartEndDate(ProjectDTO projectDTO);
- }
+}

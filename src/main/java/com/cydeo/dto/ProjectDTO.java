@@ -20,7 +20,7 @@ public class ProjectDTO {
     @NotBlank
     private String projectCode;
     @NotNull
-    private UserDTO projectManager;
+    private UserDTO assignedManager;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectStartDate, projectEndDate;
@@ -34,7 +34,7 @@ public class ProjectDTO {
     public ProjectDTO(String projectName, String projectCode, UserDTO projectManager, LocalDate projectStartDate, LocalDate projectEndDate, String projectDetail, Status projectStatus) {
         this.projectName = projectName;
         this.projectCode = projectCode;
-        this.projectManager = projectManager;
+        this.assignedManager = projectManager;
         this.projectStartDate = projectStartDate;
         this.projectEndDate = projectEndDate;
         this.projectDetail = projectDetail;
