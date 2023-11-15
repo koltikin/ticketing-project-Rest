@@ -28,7 +28,7 @@ public class Project extends BaseEntity{
     private User assignedManager;
 
     @Column(columnDefinition = "DATE")
-    private LocalDate projectStartDate, projectEndDate;
+    private LocalDate startDate, endDate;
 
     private String projectDetail;
 
