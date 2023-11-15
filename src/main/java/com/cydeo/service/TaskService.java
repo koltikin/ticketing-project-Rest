@@ -2,30 +2,30 @@ package com.cydeo.service;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
-import com.cydeo.entity.Project;
-import com.cydeo.entity.Task;
-import com.cydeo.entity.User;
+import com.cydeo.dto.UserDTO;
+import com.cydeo.enums.Status;
 
 import java.util.List;
 
-public interface TaskService extends CrudService<TaskDTO, Long>{
+public interface TaskService {
 
-    int getAllCompletedTaskCount(String projectCode);
-    int getAllUnfinishedTaskCount(String projectCode);
-    List<TaskDTO>findAllByManager();
+    TaskDTO findById(Long id);
+    List<TaskDTO> listAllTasks();
 
-    List<TaskDTO> getAllTasksNotCompleted();
+    void save(TaskDTO dto);
+    void update(TaskDTO dto);
+    void delete(Long id);
 
-    List<TaskDTO> getAllCompletedTasks();
+    int totalNonCompletedTask(String projectCode);
+    int totalCompletedTask(String projectCode);
 
-    void deleteTasksByProject(Project project);
+    void deleteByProject(ProjectDTO projectDTO);
 
-    void updateTasksByProject(ProjectDTO projectDTO);
+    void completeByProject(ProjectDTO projectDTO);
 
-    List<TaskDTO> listAllNotCompletedTaskByEmployee(User employee);
+    List<TaskDTO> listAllTasksByStatusIsNot(Status status);
+    List<TaskDTO> listAllTasksByStatus(Status status);
 
-    List<Task> listAllTasksByEmployee(User employee);
-
-    void taskStatusUpdate(TaskDTO task);
+    List<TaskDTO> listAllNonCompletedByAssignedEmployee(UserDTO assignedEmployee);
 
 }

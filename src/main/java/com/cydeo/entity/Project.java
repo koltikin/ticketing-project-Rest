@@ -25,10 +25,10 @@ public class Project extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
-    private User projectManager;
+    private User assignedManager;
 
     @Column(columnDefinition = "DATE")
-    private LocalDate projectStartDate, projectEndDate;
+    private LocalDate startDate, endDate;
 
     private String projectDetail;
 
