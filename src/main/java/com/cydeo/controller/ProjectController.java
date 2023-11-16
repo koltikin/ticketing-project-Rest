@@ -57,4 +57,15 @@ public class ProjectController {
         projectService.delete(code);
         return ResponseEntity.ok(new ResponseWrapper("project is successfully deleted",HttpStatus.OK));
     }
+
+    @GetMapping("/manager/project-status")
+    public ResponseEntity<ResponseWrapper> getProjectByManager() {
+        return ResponseEntity.ok(
+                ResponseWrapper.builder()
+                        .success(true)
+                        .message("projects are successfully retrieved")
+                        .code(HttpStatus.OK.value())
+                        .data(projectService.listAllProjectDetails()).build()
+        );
+    }
 }
