@@ -2,6 +2,7 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.ResponseWrapper;
 import com.cydeo.dto.TaskDTO;
+import com.cydeo.enums.Status;
 import com.cydeo.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.filters.AddDefaultCharsetFilter;
@@ -68,8 +69,35 @@ public class TaskController {
         );
 
     }
-    public ResponseEntity<ResponseWrapper> employeePendingTasks(){}
-    public ResponseEntity<ResponseWrapper> employeeUpdateTasks(){}
-    public ResponseEntity<ResponseWrapper> employeeArchiveTasks(){}
+    @GetMapping("/employee/pending-tasks")
+    public ResponseEntity<ResponseWrapper> employeePendingTasks(){
+        return ResponseEntity.ok(
+                ResponseWrapper.builder()
+                        .success(true)
+                        .message("Tasks are successfully retrieved")
+                        .code(HttpStatus.OK.value())
+                        .data(taskService.listAllTasksByStatusIsNot(Status.COMPLETE)).build()
+        );
+    }
+    @PutMapping("/employee/update")
+    public ResponseEntity<ResponseWrapper> employeeUpdateTasks(@RequestBody TaskDTO taskDTO){
+        taskService.update(taskDTO);
+        return ResponseEntity.ok(
+                ResponseWrapper.builder()
+                        .success(true)
+                        .message("Task is successfully updated")
+                        .code(HttpStatus.OK.value()).build()
+        );
+    }
+    @GetMapping("/employee/archive")
+    public ResponseEntity<ResponseWrapper> employeeArchiveTasks(){
+        return ResponseEntity.ok(
+                ResponseWrapper.builder()
+                        .success(true)
+                        .message("Tasks are successfully retrieved")
+                        .code(HttpStatus.OK.value())
+                        .data(taskService.listAllTasksByStatus(Status.COMPLETE)).build()
+        );
+    }
 
 }
