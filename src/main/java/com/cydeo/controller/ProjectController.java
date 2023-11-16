@@ -45,4 +45,16 @@ public class ProjectController {
                         .data(projectService.save(projectDTO)).build()
         );
     }
+
+    @PutMapping()
+    public ResponseEntity<ResponseWrapper> deleteUser(@RequestBody ProjectDTO project){
+        projectService.update(project);
+        return ResponseEntity.ok(new ResponseWrapper("project is successfully updated",HttpStatus.OK));
+    }
+
+    @DeleteMapping ("/projectCode")
+    public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable("projectCode") String code){
+        projectService.delete(code);
+        return ResponseEntity.ok(new ResponseWrapper("project is successfully deleted",HttpStatus.OK));
+    }
 }
