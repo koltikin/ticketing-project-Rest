@@ -68,4 +68,9 @@ public class ProjectController {
                         .data(projectService.listAllProjectDetails()).build()
         );
     }
+    @PutMapping("/manager/complete/{projectCode}")
+    public ResponseEntity<ResponseWrapper> managerCompleteProject(@PathVariable("projectCode") String code) {
+        projectService.complete(code);
+        return ResponseEntity.ok(new ResponseWrapper("project is successfully completed",HttpStatus.OK));
+    }
 }
