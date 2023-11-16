@@ -1,5 +1,6 @@
 package com.cydeo.dto;
 import com.cydeo.enums.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,9 @@ public class ProjectDTO {
     private String projectDetail;
     private Status projectStatus;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int unfinishedCount;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int completedCount;
 
     public ProjectDTO(String projectName, String projectCode, UserDTO projectManager, LocalDate projectStartDate, LocalDate projectEndDate, String projectDetail, Status projectStatus) {
