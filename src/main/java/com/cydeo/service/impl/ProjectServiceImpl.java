@@ -49,11 +49,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void save(ProjectDTO dto) {
+    public ProjectDTO save(ProjectDTO dto) {
 
         dto.setProjectStatus(Status.OPEN);
         Project project = projectMapper.convertToEntity(dto);
         projectRepository.save(project);
+        return projectMapper.convertToDto(projectRepository.findByProjectCode(project.getProjectCode()));
     }
 
     @Override
