@@ -5,8 +5,12 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.*;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 @OpenAPIDefinition
@@ -24,10 +28,20 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenApi() {
         return new OpenAPI()
-                .info(getInfo())
+                .info(new Info()
+                .title("Cydeo ticketing application OpenApi")
+                .version("v1")
+                .description("Cydeo ticketing Application Open Api documentation"))
+                .servers(List.of(new Server().url("http://localhost:"+System.getenv("PORT"))
+                .description("local server"), new Server().url("https://dev.cydeo.com")
+                .description("dev environment")))
+
                 .components(new Components()
-                        .addSecuritySchemes(OAUTH_SCHEME_NAME, createOAuthScheme()))
+
+                .addSecuritySchemes(OAUTH_SCHEME_NAME, createOAuthScheme()))
                 .addSecurityItem(new SecurityRequirement().addList(OAUTH_SCHEME_NAME));
+
+
     }
 
     private Info getInfo() {
@@ -61,4 +75,5 @@ public class SwaggerConfig {
                 .tokenUrl(protocolUrl + "/token")
                 .scopes(new Scopes().addString("openid", ""));
     }
+
 }
