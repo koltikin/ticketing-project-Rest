@@ -1,50 +1,141 @@
 package com.cydeo.dto;
 
 import com.cydeo.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.validation.constraints.*;
 
-@Data
-@AllArgsConstructor
+@ToString
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
 public class UserDTO {
+
     private Long id;
 
-    @NotBlank
-    @Size(max = 20,min = 2)
-    private String firstName,lastName;
+    public Long getId() {
+        return id;
+    }
 
-    @NotBlank(message = "email is required.")
-    @Email(message = "please enter a valid email.")
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @NotBlank
+    @Size(max = 15, min = 2)
+    private String firstName;
+
+    @NotBlank
+    @Size(max = 15, min = 2)
+    private String lastName;
+
+    @NotBlank
+    @Email
     private String userName;
 
-    private String OldPassWord;
-
-    @NotBlank(message = "Password is required.")
+    @NotBlank
+    @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,}")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "Password does not meet the requirements.")
     private String passWord;
 
-    private String passWordConfirm;
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String confirmPassWord;
 
-    @NotNull(message = "User status is required.")
     private boolean enabled;
 
-    @NotBlank(message = "phone number cannot be blank.")
-    @Pattern(regexp = "\\d{11}", message = "please enter a valid phone number.")
+    @NotBlank
+    @Pattern(regexp = "^\\d{10}$")
     private String phone;
 
-    @NotNull(message = "role is required, please choose a role.")
+    @NotNull
     private RoleDTO role;
 
-    @NotNull(message = "gender is required please choose a gender.")
+    @NotNull
     private Gender gender;
 
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+        checkConfirmPassword();
+    }
+
+    public String getConfirmPassWord() {
+        return confirmPassWord;
+    }
+
+    public void setConfirmPassWord(String confirmPassWord) {
+        this.confirmPassWord = confirmPassWord;
+        checkConfirmPassword();
+    }
+
+    private void checkConfirmPassword() {
+        if (this.passWord == null || this.confirmPassWord == null) {
+            return;
+        } else if (!this.passWord.equals(this.confirmPassWord)) {
+            this.confirmPassWord = null;
+        }
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public RoleDTO getRole() {
+        return role;
+    }
+
+    public void setRole(RoleDTO role) {
+        this.role = role;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
 }

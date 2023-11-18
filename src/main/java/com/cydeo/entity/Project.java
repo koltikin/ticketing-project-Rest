@@ -9,31 +9,31 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "projects")
-@Where(clause = "is_deleted = false")
-public class Project extends BaseEntity{
-
-    private String projectName;
+@Where(clause = "is_deleted=false")
+public class Project extends BaseEntity {
 
     @Column(unique = true)
     private String projectCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "manager_id")
-    private User assignedManager;
+    private String projectName;
 
     @Column(columnDefinition = "DATE")
-    private LocalDate startDate, endDate;
+    private LocalDate startDate;
 
-    private String projectDetail;
+    @Column(columnDefinition = "DATE")
+    private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)
     private Status projectStatus;
 
+    private String projectDetail;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    private User assignedManager;
 }

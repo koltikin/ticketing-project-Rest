@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProjectMapper extends BaseMapper<ProjectDTO,Project>{
+public class ProjectMapper extends BaseMapper<ProjectDTO, Project>{
 
     public ProjectMapper(ModelMapper modelMapper) {
         super(modelMapper);

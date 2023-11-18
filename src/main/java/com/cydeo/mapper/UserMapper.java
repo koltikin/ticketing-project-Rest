@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper extends BaseMapper<UserDTO,User> {
+public class UserMapper extends BaseMapper<UserDTO, User> {
 
 
     public UserMapper(ModelMapper modelMapper) {
