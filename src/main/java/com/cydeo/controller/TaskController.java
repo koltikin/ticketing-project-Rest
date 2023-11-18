@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.io.File;
 
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> getTasks(){
         return ResponseEntity.ok(
                 ResponseWrapper.builder()
@@ -28,6 +30,7 @@ public class TaskController {
         );
     }
     @GetMapping("/{taskId}")
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> getTaskById(@PathVariable("taskId") Long id){
         return ResponseEntity.ok(
                 ResponseWrapper.builder()
@@ -38,6 +41,7 @@ public class TaskController {
         );
     }
     @PostMapping
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> createTask(@RequestBody TaskDTO taskDTO){
         taskService.save(taskDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -48,6 +52,7 @@ public class TaskController {
         );
     }
     @DeleteMapping("/{taskId}")
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> deleteTask(@PathVariable("taskId") Long id){
         taskService.delete(id);
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -58,6 +63,7 @@ public class TaskController {
         );
     }
     @PutMapping
+    @RolesAllowed({"Manager"})
     public ResponseEntity<ResponseWrapper> updateTask(@RequestBody TaskDTO taskDTO){
         taskService.update(taskDTO);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(
@@ -69,6 +75,7 @@ public class TaskController {
 
     }
     @GetMapping("/employee/pending-tasks")
+    @RolesAllowed({"Employee"})
     public ResponseEntity<ResponseWrapper> employeePendingTasks(){
         return ResponseEntity.ok(
                 ResponseWrapper.builder()
@@ -79,6 +86,7 @@ public class TaskController {
         );
     }
     @PutMapping("/employee/update")
+    @RolesAllowed({"Employee"})
     public ResponseEntity<ResponseWrapper> employeeUpdateTasks(@RequestBody TaskDTO taskDTO){
         taskService.update(taskDTO);
         return ResponseEntity.ok(
@@ -89,6 +97,7 @@ public class TaskController {
         );
     }
     @GetMapping("/employee/archive")
+    @RolesAllowed({"Employee"})
     public ResponseEntity<ResponseWrapper> employeeArchiveTasks(){
         return ResponseEntity.ok(
                 ResponseWrapper.builder()
