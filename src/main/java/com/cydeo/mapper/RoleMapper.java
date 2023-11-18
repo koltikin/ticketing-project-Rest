@@ -2,13 +2,12 @@ package com.cydeo.mapper;
 
 import com.cydeo.dto.RoleDTO;
 import com.cydeo.entity.Role;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 
 @Component
-public class RoleMapper extends BaseMapper<RoleDTO,Role>{
+public class RoleMapper extends BaseMapper<RoleDTO, Role>{
 
 
     public RoleMapper(ModelMapper modelMapper) {

@@ -1,10 +1,10 @@
 package com.cydeo.service.impl;
 
-import com.cydeo.repository.ProjectRepository;
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.entity.Project;
 import com.cydeo.entity.User;
+import com.cydeo.repository.ProjectRepository;
 import com.cydeo.enums.Status;
 import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.mapper.UserMapper;
@@ -115,8 +115,8 @@ public class ProjectServiceImpl implements ProjectService {
 
             ProjectDTO obj = projectMapper.convertToDto(project);
 
-            obj.setUnfinishedCount(taskService.totalNonCompletedTask(project.getProjectCode()));
-            obj.setCompletedCount(taskService.totalCompletedTask(project.getProjectCode()));
+            obj.setUnfinishedTaskCounts(taskService.totalNonCompletedTask(project.getProjectCode()));
+            obj.setCompleteTaskCounts(taskService.totalCompletedTask(project.getProjectCode()));
 
             return obj;
             }
