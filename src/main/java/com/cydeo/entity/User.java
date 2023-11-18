@@ -1,33 +1,36 @@
 package com.cydeo.entity;
 
 import com.cydeo.enums.Gender;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "users")
-//@Where(clause = "is_deleted = false")
+//@Where(clause = "is_deleted=false")         // SELECT * FROM users WHERE id = 4 AND is_deleted = false;
 public class User extends BaseEntity {
+
     private String firstName;
     private String lastName;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String userName;
 
+    @Column(nullable = false)
     private String passWord;
+
     private boolean enabled;
     private String phone;
+
     @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

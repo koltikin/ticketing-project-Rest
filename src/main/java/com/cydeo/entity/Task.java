@@ -1,32 +1,22 @@
 package com.cydeo.entity;
 
-import com.cydeo.dto.ProjectDTO;
-import com.cydeo.dto.UserDTO;
 import com.cydeo.enums.Status;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Where;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
 @Entity
 @Table(name = "tasks")
-@Where(clause = "is_deleted = false")
+@Getter
+@Setter
+@NoArgsConstructor
+@Where(clause = "is_deleted=false")
 public class Task extends BaseEntity{
 
-    @ManyToOne
-    private Project project;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assigned_employee_id")
-    private User assignedEmployee;
     private String taskSubject;
     private String taskDetail;
 
@@ -36,10 +26,13 @@ public class Task extends BaseEntity{
     @Column(columnDefinition = "DATE")
     private LocalDate assignedDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_employee_id")
+    private User assignedEmployee;
 
-    @PrePersist
-    protected void onPrePersist(){
-        this.assignedDate = LocalDate.now();
-        this.taskStatus = Status.OPEN;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+
 }

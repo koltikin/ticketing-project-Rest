@@ -3,7 +3,6 @@ package com.cydeo.service.impl;
 import com.cydeo.config.KeycloakProperties;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.service.KeycloakService;
-import jakarta.ws.rs.core.Response;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -13,6 +12,7 @@ import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 import static java.util.Arrays.asList;
