@@ -2,6 +2,7 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.ResponseWrapper;
 import com.cydeo.dto.UserDTO;
+import com.cydeo.exception.TicketingProjectException;
 import com.cydeo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -72,7 +73,7 @@ public class UserController {
     @RolesAllowed({"Admin"})
     @DeleteMapping("{username}")
     @Operation(summary = "delete user")
-    public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable("username") String username){
+    public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable("username") String username) throws TicketingProjectException {
         userService.delete(username);
         return ResponseEntity.ok(new ResponseWrapper("user is successfully deleted",HttpStatus.OK));
     }
