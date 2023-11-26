@@ -3,6 +3,8 @@ package com.cydeo.service.impl;
 import com.cydeo.config.KeycloakProperties;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.service.KeycloakService;
+import com.cydeo.service.RoleService;
+import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -19,13 +21,12 @@ import static java.util.Arrays.asList;
 import static org.keycloak.admin.client.CreatedResponseUtil.getCreatedId;
 
 @Service
+@RequiredArgsConstructor
 public class KeycloakServiceImpl implements KeycloakService {
 
     private final KeycloakProperties keycloakProperties;
-    public KeycloakServiceImpl(KeycloakProperties keycloakProperties) {
+    private final RoleService roleService;
 
-        this.keycloakProperties = keycloakProperties;
-    }
 
     @Override
     public Response userCreate(UserDTO userDTO) {
@@ -58,7 +59,7 @@ public class KeycloakServiceImpl implements KeycloakService {
                 .findByClientId(keycloakProperties.getClientId()).get(0);
 
         RoleRepresentation userClientRole = realmResource.clients().get(appClient.getId()) //
-                .roles().get(userDTO.getRole().getDescription()).toRepresentation();
+                .roles().get(roleService.findById(userDTO.getRole().getId()).getDescription()).toRepresentation();
 
         realmResource.users().get(userId).roles().clientLevel(appClient.getId())
                 .add(List.of(userClientRole));
