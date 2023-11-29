@@ -3,6 +3,10 @@ package com.cydeo.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @MappedSuperclass
+@EntityListeners(BaseEntityListener.class)
 public class BaseEntity {
 
     @Id
@@ -19,27 +24,16 @@ public class BaseEntity {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime insertDateTime;
+
+    @Column(insertable = false)
+    private LocalDateTime lastUpdateDateTime;
+
     @Column(nullable = false, updatable = false)
     private Long insertUserId;
-    @Column(nullable = false)
-    private LocalDateTime lastUpdateDateTime;
+
     @Column(nullable = false)
     private Long lastUpdateUserId;
 
     private Boolean isDeleted = false;
-
-    @PrePersist
-    public void onPrePersist() {
-        this.insertDateTime = LocalDateTime.now();
-        this.lastUpdateDateTime = LocalDateTime.now();
-        this.insertUserId = 1L;
-        this.lastUpdateUserId = 1L;
-    }
-
-    @PreUpdate
-    public void onPreUpdate() {
-        this.lastUpdateDateTime = LocalDateTime.now();
-        this.lastUpdateUserId = 1L;
-    }
 
 }
